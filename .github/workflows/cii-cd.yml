@@ -19,6 +19,7 @@ jobs:
           ssh-keyscan -H 35.208.85.237 >> $HOME/.ssh/known_hosts
           eval $(ssh-agent -s)
           echo "$SSH_PRIVATE_KEY" | ssh-add -
+        shell: /bin/sh -e {0}
 
       - name: Deploy to Server
         run: |
