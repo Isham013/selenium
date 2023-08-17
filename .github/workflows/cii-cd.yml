@@ -3,7 +3,7 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
@@ -19,10 +19,14 @@ jobs:
           ssh-keyscan -H 35.208.85.237 >> $HOME/.ssh/known_hosts
           eval $(ssh-agent -s)
           echo "$SSH_PRIVATE_KEY" | ssh-add -
-        shell: /bin/sh -e {0}
+        env:
+          SSH_PRIVATE_KEY: |
+            -----BEGIN OPENSSH PRIVATE KEY-----
+            b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcnNhAAAAAwEAAQAAAYEAtmdaGkCEQJkvusvccdXoKJe69PUNVi0tdPRlw4G7HXhBk5QFmBPxv5OppxCr
+            -----END OPENSSH PRIVATE KEY-----
 
       - name: Deploy to Server
         run: |
-          ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa isham@35.208.85.237 "cd /home/isham/hr_chatbot_server && git pull origin main"
+          ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa isham@35.208.85.237 "cd /home/lamia/hr_chatbot_server && git pull origin master && systemctl restart uvicorn && systemctl restart celery"
 
       # Add any other steps you need for your deployment process here
