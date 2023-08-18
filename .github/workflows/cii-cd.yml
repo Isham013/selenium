@@ -11,9 +11,6 @@ jobs:
 
     steps:
     
-      - name: Print SSH key
-        run: cat /home/runner/.ssh/id_rsa
-
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -24,8 +21,11 @@ jobs:
           chmod 600 $HOME/.ssh/id_rsa
           ssh-keyscan -H 35.208.85.237 >> $HOME/.ssh/known_hosts
           eval $(ssh-agent -s)
-          echo "Adding SSH key to agent..."
           ssh-add $HOME/.ssh/id_rsa
+          
+      - name: Print SSH key
+        run: cat /home/runner/.ssh/id_rsa    
+
 
       - name: Print SSH Key (Debug)
         run: cat $HOME/.ssh/id_rsa
