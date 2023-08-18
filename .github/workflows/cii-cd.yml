@@ -22,5 +22,5 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa isham@35.208.85.237 "cd /home/isham/selenium && git pull origin main"
+          ssh -o StrictHostKeyChecking=no -v -i $HOME/.ssh/id_rsa isham@35.208.85.237 "cd /home/isham/selenium && git pull origin main"
       # Add any other steps you need for your deployment process here
