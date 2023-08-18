@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted  # This line is not needed in your case
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
