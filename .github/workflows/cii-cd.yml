@@ -25,7 +25,6 @@ jobs:
         run: |
           mkdir -p $HOME/.ssh
           echo "$SSH_PRIVATE_KEY" > /home/runner/.ssh/id_rsa
-          cat /home/runner/.ssh/id_rsa
           chmod 600 $HOME/.ssh/id_rsa
           ssh-keyscan -H 35.208.85.237 >> $HOME/.ssh/known_hosts
           ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa isham@35.208.85.237 "cd /home/isham/selenium && git pull origin main"
