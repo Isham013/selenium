@@ -16,9 +16,13 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p $HOME/.ssh
-          echo "$SSH_PRIVATE_KEY" > $HOME/.ssh/id_rsa
-          chmod 600 $HOME/.ssh/id_rsa
+          echo "-----BEGIN OPENSSH PRIVATE KEY-----" > $HOME/.ssh/my_workflow_key
+          echo "$SSH_PRIVATE_KEY" >> $HOME/.ssh/my_workflow_key
+          echo "-----END OPENSSH PRIVATE KEY-----" >> $HOME/.ssh/my_workflow_key
+          chmod 600 $HOME/.ssh/my_workflow_key
           ssh-keyscan -H 35.208.85.237 >> $HOME/.ssh/known_hosts
+          eval $(ssh-agent -s)
+          ssh-add $HOME/.ssh/my_workflow_key
 
       - name: Deploy to Server
         run: |
