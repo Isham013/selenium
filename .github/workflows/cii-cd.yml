@@ -10,28 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up SSH
+      - name: Print SSH Key (for debugging, be cautious)
         run: |
-          mkdir -p $HOME/.ssh
-          echo "$SSH_PRIVATE_KEY" > $HOME/.ssh/id_rsa
-          chmod 600 $HOME/.ssh/id_rsa
-          eval $(ssh-agent -s)
-          ssh-add $HOME/.ssh/id_rsa
-          ssh-keyscan -H 35.208.85.237 >> $HOME/.ssh/known_hosts
+          echo "$SSH_PRIVATE_KEY" > key_debug.txt
+          cat key_debug.txt
+          rm key_debug.txt
 
-          
-      - name: Print SSH key
-        run: cat /home/runner/.ssh/id_rsa    
-
-
-      - name: Print SSH Key (Debug)
-        run: cat $HOME/.ssh/id_rsa
-
-      - name: Deploy to Server
-        run: |
-          ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa isham@35.208.85.237 "cd /home/isham/selenium && git pull origin main"
-      # Add any other steps you need for your deployment process here
+      # Rest of your workflow steps here
